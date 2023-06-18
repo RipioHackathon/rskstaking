@@ -2,6 +2,33 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  // La wallet del usuario que quiere stakear
+  const address = useAddress();
+  // La cantidad de tokens que el usuario quiere stakear
+  const [amountToStake, setAmountToStake] = useState(0);
+ 
+  // Inicializamos el contrato de stake
+  const { contract: staking, isLoading: isStakingLoading } = useContract(
+    stakingContractAddress,
+    "custom"
+  );
+  
+  // Inicializamos el contrato del token que se quiere stakear
+  const { contract: stakingToken, isLoading: isStakingTokenLoading } =
+    useContract(stakingTokenAddress, "token");
+  
+  // Inicializamos el contrato del token que se quiere recibir como recompensa
+  const { contract: rewardToken, isLoading: isRewardTokenLoading } = useContract(
+    rewardTokenAddress,
+    "token"
+  );
+
+  // Tramos los balances de los tokens anteriores de la wallet del usuario
+const { data: stakingTokenBalance, refetch: refetchStakingTokenBalance } =
+useTokenBalance(stakingToken, address);
+const { data: rewardTokenBalance, refetch: refetchRewardTokenBalance } =
+useTokenBalance(rewardToken, address);
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
