@@ -24,10 +24,35 @@ export default function Home() {
   );
 
   // Tramos los balances de los tokens anteriores de la wallet del usuario
-const { data: stakingTokenBalance, refetch: refetchStakingTokenBalance } =
-useTokenBalance(stakingToken, address);
-const { data: rewardTokenBalance, refetch: refetchRewardTokenBalance } =
-useTokenBalance(rewardToken, address);
+  const { data: stakingTokenBalance, refetch: refetchStakingTokenBalance } =
+  useTokenBalance(stakingToken, address);
+
+  const { data: rewardTokenBalance, refetch: refetchRewardTokenBalance } =
+  useTokenBalance(rewardToken, address);
+
+  // Traemos la información del stakeo del usuario.
+  // Recuerda que puedes ver la estructura de este objeto en el contrato de staking
+  const {
+    data: stakeInfo,
+    refetch: refetchStakingInfo,
+    isLoading: isStakeInfoLoading,
+  } = useContractRead(staking, "getStakeInfo", address || "0");
+  
+  // Traemos la información del staking del usuario cada 10 segundos.
+  // En el contrato de staking, tenemos recompesas por segundo
+  const refetchData = () => {
+    refetchRewardTokenBalance();
+    refetchStakingTokenBalance();
+    refetchStakingInfo();
+  };
+  
+  useEffect(() => {
+    setInterval(() => {
+      refetchData();
+    }, 10000);
+  }, []);
+
+
 
   return (
     <div className={styles.container}>
