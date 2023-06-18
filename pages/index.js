@@ -108,8 +108,8 @@ export default function Home() {
             );
             await contract.call(
               "stake",
-              ethers.utils.parseEther(amountToStake)
-            );
+              [ethers.utils.parseEther(amountToStake)]
+              );
             alert("Tus tokens ya están en staking!");
           }}
         >
@@ -122,23 +122,23 @@ export default function Home() {
           action={async (contract) => {
             await contract.call(
               "withdraw",
-              ethers.utils.parseEther(amountToStake)
-            );
+              [ethers.utils.parseEther(amountToStake)]
+              );
             alert("Liberaste tus tokens!");
           }}
         >
-          Unstake!
+          Retirar
         </Web3Button>
 
         <Web3Button
           className={styles.button}
           contractAddress={stakingContractAddress}
           action={async (contract) => {
-            await contract.call("claimRewards");
+            await contract.call("claimRewards", []);
             alert("Reclamaste recompensa con éxito!");
           }}
         >
-          Claim rewards!
+          Reclama recompensa
         </Web3Button>
       </div>
 
