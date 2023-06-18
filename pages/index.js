@@ -13,8 +13,6 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import { stakingContractAddress } from "../const/Details";
-import { stakingTokenAddress } from "../const/Details";
-import { rewardTokenAddress } from "../const/Details";
 
 export default function Home() {
   // La wallet del usuario que quiere stakear
@@ -27,39 +25,42 @@ export default function Home() {
     stakingContractAddress,
     "custom"
   );
-  
+
+   // Tramos los balances de staking y reward token del contrato
+   const { data: rewardTokenAddress } = useContractRead(staking, "rewardToken");
+   const { data: stakingTokenAddress } = useContractRead(
+     staking,
+     "stakingToken"
+   );
+ 
   // Inicializamos el contrato del token que se quiere stakear
   const { contract: stakingToken, isLoading: isStakingTokenLoading } =
     useContract(stakingTokenAddress, "token");
   
   // Inicializamos el contrato del token que se quiere recibir como recompensa
-  const { contract: rewardToken, isLoading: isRewardTokenLoading } = useContract(
-    rewardTokenAddress,
-    "token"
-  );
+  const { contract: rewardToken, isLoading: isRewardTokenLoading } = 
+    useContract(rewardTokenAddress, "token");
 
-  // Tramos los balances de los tokens anteriores de la wallet del usuario
-  const { data: stakingTokenBalance, refetch: refetchStakingTokenBalance } =
-  useTokenBalance(stakingToken, address);
-
-  const { data: rewardTokenBalance, refetch: refetchRewardTokenBalance } =
-  useTokenBalance(rewardToken, address);
+ 
 
   // Traemos la información del stakeo del usuario.
   // Recuerda que puedes ver la estructura de este objeto en el contrato de staking
+  const { data: stakingTokenBalance, refetch: refetchStakingTokenBalance } =
+    useTokenBalance(stakingToken, address);
+  const { data: rewardTokenBalance, refetch: refetchRewardTokenBalance } =
+    useTokenBalance(rewardToken, address);
+
+  
+  // Traemos la información del staking del usuario cada 10 segundos.
+  // En el contrato de staking, tenemos recompesas por segundo
+
   const {
     data: stakeInfo,
     refetch: refetchStakingInfo,
     isLoading: isStakeInfoLoading,
-  } = useContractRead(staking, "getStakeInfo", address || "0");
+  } = useContractRead(staking, "getStakeInfo", [address || "0"]);
   
-  // Traemos la información del staking del usuario cada 10 segundos.
-  // En el contrato de staking, tenemos recompesas por segundo
-  const refetchData = () => {
-    refetchRewardTokenBalance();
-    refetchStakingTokenBalance();
-    refetchStakingInfo();
-  };
+
 
   useEffect(() => {
     setInterval(() => {
@@ -67,58 +68,81 @@ export default function Home() {
     }, 10000);
   }, []);
 
+  const refetchData = () => {
+    refetchRewardTokenBalance();
+    refetchStakingTokenBalance();
+    refetchStakingInfo();
+  };
+
+
 
 
   return (
-    <><div className={styles.container}>
-      <input
-        className={styles.textbox}
-        type="number"
-        value={amountToStake}
-        onChange={(e) => setAmountToStake(e.target.value)} />
-      <Web3Button
-        className={styles.button}
-        contractAddress={stakingContractAddress}
-        action={async (contract) => {
-          await stakingToken.setAllowance(
-            stakingContractAddress,
-            amountToStake
-          );
-          await contract.call(
-            "stake",
-            ethers.utils.parseEther(amountToStake)
-          );
-          alert("Tokens staked successfully!");
-        } }
-      >
-        Stake!
-      </Web3Button>
+    <div className={styles.container}>
+    <main className={styles.main}>
+      <h1 className={styles.title}>RSK staking dapp</h1>
 
-      <Web3Button
-        className={styles.button}
-        contractAddress={stakingContractAddress}
-        action={async (contract) => {
-          await contract.call(
-            "withdraw",
-            ethers.utils.parseEther(amountToStake)
-          );
-          alert("Tokens unstaked successfully!");
-        } }
-      >
-        Unstake!
-      </Web3Button>
+      <p className={styles.description}>
+        Conecta tu wallet y comienza a ganar tokens!
+      </p>
 
-      <Web3Button
-        className={styles.button}
-        contractAddress={stakingContractAddress}
-        action={async (contract) => {
-          await contract.call("claimRewards");
-          alert("Rewards claimed successfully!");
-        } }
-      >
-        Claim rewards!
-      </Web3Button>
-    </div><div className={styles.grid}>
+      <div className={styles.connect}>
+        <ConnectWallet />
+      </div>
+
+      <div className={styles.stakeContainer}>
+        <input
+          className={styles.textbox}
+          type="number"
+          value={amountToStake}
+          onChange={(e) => setAmountToStake(e.target.value)}
+        />
+
+        <Web3Button
+          className={styles.button}
+          contractAddress={stakingContractAddress}
+          action={async (contract) => {
+            await stakingToken.setAllowance(
+              stakingContractAddress,
+              amountToStake
+            );
+            await contract.call(
+              "stake",
+              ethers.utils.parseEther(amountToStake)
+            );
+            alert("Tus tokens ya están en staking!");
+          }}
+        >
+          Stake!
+        </Web3Button>
+
+        <Web3Button
+          className={styles.button}
+          contractAddress={stakingContractAddress}
+          action={async (contract) => {
+            await contract.call(
+              "withdraw",
+              ethers.utils.parseEther(amountToStake)
+            );
+            alert("Liberaste tus tokens!");
+          }}
+        >
+          Unstake!
+        </Web3Button>
+
+        <Web3Button
+          className={styles.button}
+          contractAddress={stakingContractAddress}
+          action={async (contract) => {
+            await contract.call("claimRewards");
+            alert("Reclamaste recompensa con éxito!");
+          }}
+        >
+          Claim rewards!
+        </Web3Button>
+      </div>
+
+      <div className={styles.grid}>
         <a className={styles.card}>
           <h2>Stake token balance</h2>
           <p>{stakingTokenBalance?.displayValue}</p>
@@ -142,6 +166,8 @@ export default function Home() {
             {stakeInfo && ethers.utils.formatEther(stakeInfo[1].toString())}
           </p>
         </a>
-      </div></>
+      </div>
+    </main>
+  </div>
   );
 }
