@@ -1,5 +1,20 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
+import {
+  ConnectWallet,
+  useAddress,
+  useContract,
+  useContractRead,
+  useContractWrite,
+  useTokenBalance,
+  Web3Button,
+} from "@thirdweb-dev/react";
+
+import { ethers } from "ethers";
+
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import { stakingContractAddress } from "../const/Details";
+import { stakingTokenAddress } from "../const/Details";
+import { rewardTokenAddress } from "../const/Details";
 
 export default function Home() {
   // La wallet del usuario que quiere stakear
@@ -45,7 +60,7 @@ export default function Home() {
     refetchStakingTokenBalance();
     refetchStakingInfo();
   };
-  
+
   useEffect(() => {
     setInterval(() => {
       refetchData();
@@ -55,50 +70,78 @@ export default function Home() {
 
 
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://thirdweb.com/">thirdweb</a>!
-        </h1>
+    <><div className={styles.container}>
+      <input
+        className={styles.textbox}
+        type="number"
+        value={amountToStake}
+        onChange={(e) => setAmountToStake(e.target.value)} />
+      <Web3Button
+        className={styles.button}
+        contractAddress={stakingContractAddress}
+        action={async (contract) => {
+          await stakingToken.setAllowance(
+            stakingContractAddress,
+            amountToStake
+          );
+          await contract.call(
+            "stake",
+            ethers.utils.parseEther(amountToStake)
+          );
+          alert("Tokens staked successfully!");
+        } }
+      >
+        Stake!
+      </Web3Button>
 
-        <p className={styles.description}>
-          Get started by configuring your desired network in{" "}
-          <code className={styles.code}>pages/_app.js</code>, then modify the{" "}
-          <code className={styles.code}>pages/index.js</code> file!
-        </p>
+      <Web3Button
+        className={styles.button}
+        contractAddress={stakingContractAddress}
+        action={async (contract) => {
+          await contract.call(
+            "withdraw",
+            ethers.utils.parseEther(amountToStake)
+          );
+          alert("Tokens unstaked successfully!");
+        } }
+      >
+        Unstake!
+      </Web3Button>
 
-        <div className={styles.connect}>
-          <ConnectWallet />
-        </div>
+      <Web3Button
+        className={styles.button}
+        contractAddress={stakingContractAddress}
+        action={async (contract) => {
+          await contract.call("claimRewards");
+          alert("Rewards claimed successfully!");
+        } }
+      >
+        Claim rewards!
+      </Web3Button>
+    </div><div className={styles.grid}>
+        <a className={styles.card}>
+          <h2>Stake token balance</h2>
+          <p>{stakingTokenBalance?.displayValue}</p>
+        </a>
 
-        <div className={styles.grid}>
-          <a href="https://portal.thirdweb.com/" className={styles.card}>
-            <h2>Portal &rarr;</h2>
-            <p>
-              Guides, references and resources that will help you build with
-              thirdweb.
-            </p>
-          </a>
+        <a className={styles.card}>
+          <h2>Reward token balance</h2>
+          <p>{rewardTokenBalance?.displayValue}</p>
+        </a>
 
-          <a href="https://thirdweb.com/dashboard" className={styles.card}>
-            <h2>Dashboard &rarr;</h2>
-            <p>
-              Deploy, configure and manage your smart contracts from the
-              dashboard.
-            </p>
-          </a>
+        <a className={styles.card}>
+          <h2>Staked amount</h2>
+          <p>
+            {stakeInfo && ethers.utils.formatEther(stakeInfo[0].toString())}
+          </p>
+        </a>
 
-          <a
-            href="https://portal.thirdweb.com/templates"
-            className={styles.card}
-          >
-            <h2>Templates &rarr;</h2>
-            <p>
-              Discover and clone template projects showcasing thirdweb features.
-            </p>
-          </a>
-        </div>
-      </main>
-    </div>
+        <a className={styles.card}>
+          <h2>Current reward</h2>
+          <p>
+            {stakeInfo && ethers.utils.formatEther(stakeInfo[1].toString())}
+          </p>
+        </a>
+      </div></>
   );
 }
