@@ -1,35 +1,52 @@
-## Getting Started
+#  Tuki
+La tarjeta de débito de custodia propia para ahorrar en ERC-20 y gastar en cualquier parte del mundo. 
 
-Create a project using this example:
+Tutorial para hacer una dapp de staking en Rootstock.
 
-```bash
-npx thirdweb create --template next-javascript-starter
-```
+<p align="center">
+    <br>
+    <img src="imgs/landing.png" width="500"/>
+    <br>
+<p>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Relevant links
 
-On `pages/_app.js`, you'll find our `ThirdwebProvider` wrapping your app, this is necessary for our [hooks](https://portal.thirdweb.com/react) and
-[UI Components](https://portal.thirdweb.com/ui-components) to work.
+| What? | Link |
+|---|---|
+| Staking contract address | https://explorer.testnet.rsk.co/address/0xb0880d6f2cc4ede914bb73474f945cb428e8215a |
+| Staking Token contract address | https://explorer.testnet.rsk.co/address/0x9c0a81daeec6fdd15bbbe94c2feabe037a26548c |
+| Reward Token contract address | https://explorer.testnet.rsk.co/address/0xbeb06a2b21005ec5defe81193d3f1895fbc6995f |
+| Demo en RSK Testnet | https://rskstaking.vercel.app/ |
+| Landing | https://tukicard.xyz |
+| P2P dapp rDOC | app.simplecrypto.cash/charly |
 
-### Deploy to IPFS
 
-Deploy a copy of your application to IPFS using the following command:
+<p align="center">
+    <br>
+    <img src="imgs/problem.jpeg" width="500"/>
+    <br>
+<p>
 
-```bash
-yarn deploy
-```
+<p align="center">
+    <br>
+    <img src="imgs/solution.jpeg" width="500"/>
+    <br>
+<p>
 
-## Learn More
 
-To learn more about thirdweb and Next.js, take a look at the following resources:
+## Tech stack
+1. Next.js
+2. Thirdweb.js
+3. Ethers.js
 
-- [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
-- [thirdweb JavaScript Documentation](https://docs.thirdweb.com/react) - learn about our JavaScript/TypeScript SDK.
-- [thirdweb Portal](https://docs.thirdweb.com/react) - check our guides and development resources.
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+### Core
+1. Inicialización del contrato. 
+   1. El constructor no tiene inputs. 
+   2. Se inicializan `ERC721.initializer(name, symbol)` y `Ownable.initializer(owner)`. Se guarda un 0 en la en la storage variable `token_counter() -> (number: Uint256)`. 
+2. El usuario puede llamar la variable external `register_yourself(application_number: felt: felt, name: felt, last_name: felt, id: felt) -> ()`. En el argumento register_number registra el número de registro de su aplicación, su nombre, su apellido y su cédula. 
 
-You can check out [the thirdweb GitHub organization](https://github.com/thirdweb-dev) - your feedback and contributions are welcome!
 
-## Join our Discord!
 
-For any questions, suggestions, join our discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).
+### TODO
+5. Capacidad de inicializar un documento indicando el sitio en IPFS donde se encuentra.
+6. Se llama la función, who_collaborating() -> (len: felt, users_collaborating: felt*) para leer una storage variable donde se mantienen los usuarios que aceptan colaborar.
