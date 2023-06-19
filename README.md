@@ -19,12 +19,23 @@
 | Landing | https://tukicard.xyz |
 | P2P dapp rDOC | https://app.simplecrypto.cash/charly |
 
+### Tech stack
+1. Next.js
+2. Thirdweb.js
+3. Ethers.js
+
+### ¿Cómo funciona?
+Creamos una dapp para enseñar cómo funciona que un usuario autorice el gasto de algún token por parte de un contrato inteligente.
+En este caso, el usuario puede ahorrar en un token ERC-20 y recibir recompensas por sus ahorros en otro token ERC-20.
 
 <p align="center">
     <br>
     <img src="img/demo.png" width="500"/>
     <br>
 <p>
+
+### El futuro de los pagos es decentralizado
+Agregamos a nuestro primer MVP de pagos p2p: https://simplecrypto.cash la posibilidad de que cualquier comercio pueda aceptar pagos en DOC (Dollar on Chain).
 
 <p align="center">
     <br>
@@ -33,7 +44,4 @@
 <p>
 
 
-### Tech stack
-1. Next.js
-2. Thirdweb.js
-3. Ethers.js
+
