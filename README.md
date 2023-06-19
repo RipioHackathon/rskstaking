@@ -1,7 +1,7 @@
 #  Tuki
 <p align="center">
     <br>
-    <img src="img/landing.png" width="100%"/>
+    <img src="img/landing.png" width="500"/>
     <br>
 <p>
 
@@ -22,13 +22,13 @@
 
 <p align="center">
     <br>
-    <img src="imgs/problem.jpeg" width="500"/>
+    <img src="img/demo.png" width="500"/>
     <br>
 <p>
 
 <p align="center">
     <br>
-    <img src="imgs/solution.jpeg" width="500"/>
+    <img src="img/doc.png" width="500"/>
     <br>
 <p>
 
