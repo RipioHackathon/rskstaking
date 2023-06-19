@@ -5,7 +5,7 @@
     <br>
 <p>
 
-## Tutorial para hacer una dapp de staking en Rootstock.
+## Dapp de staking en Rootstock.
 
 
 ### Relevant links
