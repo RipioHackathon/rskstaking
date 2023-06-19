@@ -80,10 +80,10 @@ export default function Home() {
   return (
     <div className={styles.container}>
     <main className={styles.main}>
-      <h1 className={styles.title}>RSK staking dapp</h1>
+      <h1 className={styles.title}>TukiCard RSK staking dapp</h1>
 
       <p className={styles.description}>
-        Conecta tu wallet y comienza a ganar tokens!
+        Conecta tu wallet, ahorra y gana recompesas!
       </p>
 
       <div className={styles.connect}>
@@ -113,7 +113,7 @@ export default function Home() {
             alert("Tus tokens ya están en staking!");
           }}
         >
-          Stake!
+          Ahorrar
         </Web3Button>
 
         <Web3Button
@@ -144,24 +144,24 @@ export default function Home() {
 
       <div className={styles.grid}>
         <a className={styles.card}>
-          <h2>Stake token balance</h2>
+          <h2>Balance en tu cuenta</h2>
           <p>{stakingTokenBalance?.displayValue}</p>
         </a>
 
         <a className={styles.card}>
-          <h2>Reward token balance</h2>
+          <h2>Recompensas recibidas</h2>
           <p>{rewardTokenBalance?.displayValue}</p>
         </a>
 
         <a className={styles.card}>
-          <h2>Staked amount</h2>
+          <h2>Cantidad ahorrada</h2>
           <p>
             {stakeInfo && ethers.utils.formatEther(stakeInfo[0].toString())}
           </p>
         </a>
 
         <a className={styles.card}>
-          <h2>Current reward</h2>
+          <h2>Recompensas por reclamar</h2>
           <p>
             {stakeInfo && ethers.utils.formatEther(stakeInfo[1].toString())}
           </p>
