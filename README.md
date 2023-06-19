@@ -17,7 +17,7 @@
 | Reward Token contract address | https://explorer.testnet.rsk.co/address/0xbeb06a2b21005ec5defe81193d3f1895fbc6995f |
 | Demo en RSK Testnet | https://rskstaking.vercel.app/ |
 | Landing | https://tukicard.xyz |
-| P2P dapp rDOC | https://app.simplecrypto.cash/charly |
+| P2P dapp rDOC | https://ripiohackathon.vercel.app/charly |
 
 ### Tech stack
 1. Next.js
