@@ -38,15 +38,3 @@ Tutorial para hacer una dapp de staking en Rootstock.
 1. Next.js
 2. Thirdweb.js
 3. Ethers.js
-
-### Core
-1. Inicialización del contrato. 
-   1. El constructor no tiene inputs. 
-   2. Se inicializan `ERC721.initializer(name, symbol)` y `Ownable.initializer(owner)`. Se guarda un 0 en la en la storage variable `token_counter() -> (number: Uint256)`. 
-2. El usuario puede llamar la variable external `register_yourself(application_number: felt: felt, name: felt, last_name: felt, id: felt) -> ()`. En el argumento register_number registra el número de registro de su aplicación, su nombre, su apellido y su cédula. 
-
-
-
-### TODO
-5. Capacidad de inicializar un documento indicando el sitio en IPFS donde se encuentra.
-6. Se llama la función, who_collaborating() -> (len: felt, users_collaborating: felt*) para leer una storage variable donde se mantienen los usuarios que aceptan colaborar.
