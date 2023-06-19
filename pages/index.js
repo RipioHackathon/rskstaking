@@ -80,12 +80,15 @@ export default function Home() {
   return (
     <div className={styles.container}>
     <main className={styles.main}>
-      <h1 className={styles.title}>TukiCard RSK staking dapp</h1>
+      <h1 className={styles.title}>Tuki: La tarjeta de débito de custodia propia.</h1>
 
       <p className={styles.description}>
-        Conecta tu wallet, ahorra y gana recompesas!
+        Conecta tu wallet, ahorra en crypto y gana recompesas! 
       </p>
 
+      <p className={styles.description}>
+        Estamos interactuando en la blockchain RSK Testnet. Los tokens no tienen valor. Su uso es para fines educativos. 
+      </p>
       <div className={styles.connect}>
         <ConnectWallet />
       </div>
@@ -167,6 +170,10 @@ export default function Home() {
           </p>
         </a>
       </div>
+
+      <h1 className={styles.title}><a href="https://tukicard.xyz">Visita nuestro sitio para ser de de lxs primerxs en tener su tarjeta Tuki.</a></h1>
+
+
     </main>
   </div>
   );
