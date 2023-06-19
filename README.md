@@ -1,15 +1,14 @@
 #  Tuki
-La tarjeta de débito de custodia propia para ahorrar en ERC-20 y gastar en cualquier parte del mundo. 
-
-Tutorial para hacer una dapp de staking en Rootstock.
-
 <p align="center">
     <br>
     <img src="img/landing.png" width="100%"/>
     <br>
 <p>
 
-## Relevant links
+## Tutorial para hacer una dapp de staking en Rootstock.
+
+
+### Relevant links
 
 | What? | Link |
 |---|---|
@@ -34,7 +33,7 @@ Tutorial para hacer una dapp de staking en Rootstock.
 <p>
 
 
-## Tech stack
+### Tech stack
 1. Next.js
 2. Thirdweb.js
 3. Ethers.js
