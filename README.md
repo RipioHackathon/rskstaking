@@ -5,7 +5,7 @@ Tutorial para hacer una dapp de staking en Rootstock.
 
 <p align="center">
     <br>
-    <img src="imgs/landing.png" width="500"/>
+    <img src="imgs/landing.png" width="100%"/>
     <br>
 <p>
 
